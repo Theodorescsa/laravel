@@ -29,6 +29,8 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - laravel_network
+    command: >
+      sh -c "php artisan migrate --force && php-fpm"
 
   nginx:
     image: nginx:alpine
