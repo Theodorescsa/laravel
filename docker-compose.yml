@@ -16,14 +16,13 @@ services:
       - laravel_network
 
   db:
-    image: mysql:8.0
-    container_name: laravel_db
-    restart: unless-stopped
+    image: mysql:8
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: dinhthai2004
-      MYSQL_DATABASE: blog
-      MYSQL_USER: root
-      MYSQL_PASSWORD: dinhthai2004
+      MYSQL_ROOT_PASSWORD: mysecurepassword  # Đặt mật khẩu root
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: myuser                      # Người dùng bình thường (không phải root)
+      MYSQL_PASSWORD: mypassword  
     ports:
       - "3306:3306"
     volumes:
