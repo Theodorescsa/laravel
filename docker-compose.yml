@@ -20,8 +20,8 @@ services:
     container_name: laravel_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: blog
       MYSQL_ROOT_PASSWORD: dinhthai2004
+      MYSQL_DATABASE: blog
       MYSQL_USER: root
       MYSQL_PASSWORD: dinhthai2004
     ports:
