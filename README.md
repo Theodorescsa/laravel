@@ -69,4 +69,15 @@ php artisan queue:work
 
 ## Liên Hệ
 Nếu bạn gặp bất kỳ vấn đề gì, vui lòng liên hệ với nhóm phát triển qua email: `support@ten-du-an.com`.
+## Các url
+http://47.128.220.182:8000/posts
+https://editor.swagger.io/
+📌 Cách sử dụng Swagger
+1️⃣ Mở Swagger Editor
+Truy cập editor.swagger.io.
+Copy toàn bộ YAML trên vào phần Editor.
+Swagger sẽ tự động tạo tài liệu API.
+2️⃣ Gọi API với Swagger UI
+Dùng "Authorize" để nhập JWT token.
+Chọn API muốn gọi → "Try it out" → Nhập dữ liệu → "Execute".
 
