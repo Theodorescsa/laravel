@@ -1,0 +1,247 @@
+openapi: 3.0.0
+info:
+  title: Blog API Documentation
+  description: API documentation for the Laravel Blog system.
+  version: 1.0.0
+servers:
+  - url: http://your-domain.com/api
+    description: Production Server
+paths:
+  /login:
+    post:
+      summary: Đăng nhập
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "user@example.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        "200":
+          description: Đăng nhập thành công
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: "your-jwt-token"
+        "401":
+          description: Đăng nhập thất bại
+
+  /logout:
+    post:
+      summary: Đăng xuất
+      tags:
+        - Auth
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Đăng xuất thành công
+        "401":
+          description: Chưa đăng nhập
+
+  /posts:
+    get:
+      summary: Lấy danh sách bài viết
+      tags:
+        - Posts
+      responses:
+        "200":
+          description: Danh sách bài viết
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    title:
+                      type: string
+                      example: "Bài viết đầu tiên"
+                    content:
+                      type: string
+                      example: "Nội dung bài viết..."
+    post:
+      summary: Tạo bài viết mới
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Bài viết mới"
+                content:
+                  type: string
+                  example: "Nội dung bài viết..."
+      responses:
+        "201":
+          description: Bài viết được tạo thành công
+        "401":
+          description: Không có quyền truy cập
+
+  /posts/{id}:
+    get:
+      summary: Xem chi tiết bài viết
+      tags:
+        - Posts
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Thông tin bài viết
+        "404":
+          description: Không tìm thấy bài viết
+
+    put:
+      summary: Cập nhật bài viết
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "Bài viết cập nhật"
+                content:
+                  type: string
+                  example: "Nội dung cập nhật..."
+      responses:
+        "200":
+          description: Cập nhật thành công
+        "403":
+          description: Không có quyền cập nhật
+
+    delete:
+      summary: Xóa bài viết
+      tags:
+        - Posts
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Xóa thành công
+        "403":
+          description: Không có quyền xóa
+
+  /categories:
+    get:
+      summary: Lấy danh sách danh mục
+      tags:
+        - Categories
+      responses:
+        "200":
+          description: Danh sách danh mục
+    post:
+      summary: Thêm danh mục mới
+      tags:
+        - Categories
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Laravel"
+      responses:
+        "201":
+          description: Thêm danh mục thành công
+        "401":
+          description: Không có quyền
+
+  /categories/{id}:
+    put:
+      summary: Cập nhật danh mục
+      tags:
+        - Categories
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "PHP"
+      responses:
+        "200":
+          description: Cập nhật thành công
+    delete:
+      summary: Xóa danh mục
+      tags:
+        - Categories
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Xóa thành công
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
